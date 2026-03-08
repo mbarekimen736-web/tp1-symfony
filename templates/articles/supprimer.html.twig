@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supprimer article{% endblock %}
+
+{% block body %}
+
+<h2>🗑 Supprimer l'article</h2>
+
+<p>Voulez-vous vraiment supprimer cet article ?</p>
+
+<form method="post"
+      action="{{ path('app_article_supprimer', {'id': article.id}) }}">
+
+    <input type="hidden" name="_token"
+           value="{{ csrf_token('delete' ~ article.id) }}">
+
+    <button class="btn btn-danger">
+        Supprimer
+    </button>
+
+    <a href="{{ path('app_articles') }}" class="btn btn-secondary">
+        Annuler
+    </a>
+
+</form>
+
+{% endblock %}

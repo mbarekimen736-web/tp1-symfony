@@ -1,0 +1,41 @@
+<!-- Fichier : templates/articles/nouveau.html.twig -->
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+
+<h1>📝 Article</h1>
+
+{{ form_start(form) }}
+
+<div class="mb-3">
+    {{ form_row(form.titre) }}
+</div>
+
+<div class="mb-3">
+    {{ form_row(form.contenu) }}
+</div>
+
+<div class="mb-3">
+    {{ form_row(form.auteur) }}
+</div>
+
+<div class="mb-3">
+    {{ form_row(form.dateCreation) }}
+</div>
+
+<div class="mb-3 form-check">
+    {{ form_row(form.publie) }}
+</div>
+
+{{ form_row(form.enregistrer) }}
+
+{{ form_end(form) }}
+
+<a href="{{ path('app_articles') }}" class="btn btn-secondary mt-3">
+    Retour
+</a>
+
+{% endblock %}

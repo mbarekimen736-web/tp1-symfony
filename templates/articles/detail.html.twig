@@ -1,0 +1,65 @@
+/* 📌 Fichier : templates/articles/detail.html.twig */
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail article{% endblock %}
+
+{% block body %}
+
+<h2 class="mb-4">{{ article.titre }}</h2>
+
+<p><strong>Auteur :</strong> {{ article.auteur }}</p>
+
+<p><strong>Date :</strong> {{ article.dateCreation|date('d/m/Y H:i') }}</p>
+
+<p><strong>Contenu :</strong></p>
+
+<p class="lead border p-3">{{ article.contenu }}</p>
+
+<p>
+<strong>Catégorie :</strong>
+
+{% if article.categorie %}
+<span class="badge bg-info">
+{{ article.categorie.nom }}
+</span>
+{% else %}
+<span class="text-muted">Aucune</span>
+{% endif %}
+
+</p>
+
+<p>
+<strong>Publié :</strong>
+
+{% if article.publie %}
+✅ Oui
+{% else %}
+❌ Non
+{% endif %}
+</p>
+
+<a href="{{ path('app_articles') }}" class="btn btn-secondary">
+← Retour
+</a>
+
+<a href="{{ path('app_article_modifier', {id: article.id}) }}"
+class="btn btn-warning">
+✏ Modifier
+</a>
+
+<form method="post"
+action="{{ path('app_article_supprimer', {id: article.id}) }}"
+style="display:inline"
+onsubmit="return confirm('Supprimer cet article ?')">
+
+<input type="hidden" name="_token"
+value="{{ csrf_token('delete' ~ article.id) }}">
+
+<button class="btn btn-danger">
+🗑 Supprimer
+</button>
+
+</form>
+
+{% endblock %}
