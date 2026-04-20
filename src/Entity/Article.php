@@ -4,8 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -21,8 +20,7 @@ class Article
     #[ORM\Column(type: 'text')]
     private ?string $contenu = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $auteur = null;
+    // ❌ حذفنا auteur string وبدّلناه بـ relation
 
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $dateCreation = null;
@@ -30,8 +28,12 @@ class Article
     #[ORM\Column(nullable: true)]
     private ?bool $publie = null;
 
-    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'articles')]
+    #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?Categorie $categorie = null;
+
+    // 🔥 NEW: relation with User
+    #[ORM\ManyToOne(inversedBy: 'articles')]
+    private ?User $auteur_user = null;
 
     public function getId(): ?int
     {
@@ -57,17 +59,6 @@ class Article
     public function setContenu(?string $contenu): static
     {
         $this->contenu = $contenu;
-        return $this;
-    }
-
-    public function getAuteur(): ?string
-    {
-        return $this->auteur;
-    }
-
-    public function setAuteur(?string $auteur): static
-    {
-        $this->auteur = $auteur;
         return $this;
     }
 
@@ -101,6 +92,19 @@ class Article
     public function setCategorie(?Categorie $categorie): static
     {
         $this->categorie = $categorie;
+        return $this;
+    }
+
+    // 🔥 GETTER / SETTER auteur_user
+
+    public function getAuteurUser(): ?User
+    {
+        return $this->auteur_user;
+    }
+
+    public function setAuteurUser(?User $auteur_user): static
+    {
+        $this->auteur_user = $auteur_user;
         return $this;
     }
 }
